@@ -46,6 +46,7 @@
      <Compile Include="Assets\Scipts\Ball.cs" />
      <Compile Include="Assets\Scipts\SceneController.cs" />
      <Compile Include="Assets\Scipts\GameController.cs" />
+     <Compile Include="Assets\MenuController.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />

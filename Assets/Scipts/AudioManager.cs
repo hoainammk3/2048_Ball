@@ -7,7 +7,8 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
     
-    public AudioSource audioSource;
+    public AudioSource soundSource;
+    public AudioSource musicSource;
     
     public AudioClip colSound;
     public AudioClip tranSound;
@@ -20,11 +21,23 @@ public class AudioManager : MonoBehaviour
 
     public void PlayCollisionSound()
     {
-        audioSource.PlayOneShot(colSound);
+        soundSource.PlayOneShot(colSound);
     }
 
     public void PlayTransferSound()
     {
-        audioSource.PlayOneShot(tranSound);
+        soundSource.PlayOneShot(tranSound);
+    }
+
+    public void SetVolumeSound(float volume)
+    {
+        soundSource.volume = volume;
+        Debug.Log("sound volume changed: " + volume);
+    }
+
+    public void SetVolumeMusic(float volume)
+    {
+        musicSource.volume = volume;
+        Debug.Log("music volume changed: " + volume);
     }
 }
