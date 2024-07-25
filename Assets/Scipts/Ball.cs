@@ -60,14 +60,17 @@ public class Ball : MonoBehaviour
         if (!GameController.Instance.isActive) return;
         if (Input.GetMouseButtonDown(0) && !_isDragging && _canDrag)
         {
-            StartDragging();
+            if (Input.mousePosition.y <= 1450)
+            {
+                StartDragging();    
+            }
+            
         }
         else if (Input.GetMouseButtonUp(0) && _isDragging)
         {
             StopDragging();
             GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             _canDrag = false;
-            AudioManager.Instance.PlayCollisionSound();
         }
             
         if (_isDragging)
@@ -130,6 +133,7 @@ public class Ball : MonoBehaviour
 
         if (other.gameObject.GetComponent<EdgeCollider2D>() || !other.gameObject.CompareTag("Untagged") && !_canDrag)
         {
+            if (!_finish)    AudioManager.Instance.PlayCollisionSound();
             _finish = true;
         }
     }

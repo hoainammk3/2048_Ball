@@ -139,4 +139,16 @@ public class BallController : MonoBehaviour
         //Sinh ra bóng
         return true;
     }
+
+    public void ClearAllBall()
+    {
+        foreach (var ball in _ballsContainer)
+        {
+            if (ball) Destroy(ball.gameObject);
+        }
+        _ballsContainer.Clear();
+        
+        SpawnBallRandom(0, 3);
+        
+    }
 }

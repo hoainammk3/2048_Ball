@@ -12,11 +12,27 @@ public class AudioManager : MonoBehaviour
     
     public AudioClip colSound;
     public AudioClip tranSound;
-
+    public AudioClip clickSound;
+    
     private void Awake()
     {
-        if (!Instance) Instance = this;
-        else Destroy(Instance);
+        Debug.Log("Awake");
+        if (!Instance)
+        {
+            Instance = this;
+            soundSource = transform.GetChild(1).GetComponent<AudioSource>();
+            musicSource = transform.GetChild(0).GetComponent<AudioSource>();
+
+            colSound = Resources.Load<AudioClip>("Sound/collisionSound");
+            tranSound = Resources.Load<AudioClip>("Sound/ballTranferSound");
+            clickSound = Resources.Load<AudioClip>("Sound/clickSound");
+            DontDestroyOnLoad(gameObject);
+        }
+//        else
+//        {
+//            Destroy(gameObject);
+//        }
+        
     }
 
     public void PlayCollisionSound()
@@ -32,12 +48,26 @@ public class AudioManager : MonoBehaviour
     public void SetVolumeSound(float volume)
     {
         soundSource.volume = volume;
-        Debug.Log("sound volume changed: " + volume);
     }
 
     public void SetVolumeMusic(float volume)
     {
         musicSource.volume = volume;
-        Debug.Log("music volume changed: " + volume);
+    }
+
+    public float GetVolumeSound()
+    {
+        return soundSource.volume;
+    }
+
+    public float GetVolumeMusic()
+    {
+        return musicSource.volume;
+    }
+
+    public void PlayClickSound()
+    {
+        Debug.Log(soundSource);
+        soundSource.PlayOneShot(clickSound);
     }
 }

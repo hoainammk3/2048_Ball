@@ -16,11 +16,11 @@ public class GameController : MonoBehaviour
     public GameObject levelUpPanel;
     public GameObject gameOverPanel;
     
-    private TextMeshProUGUI scoreText;
-    private TextMeshProUGUI currentLevelText;
-    private TextMeshProUGUI nextLevelText;
+    private TextMeshProUGUI _scoreText;
+    private TextMeshProUGUI _currentLevelText;
+    private TextMeshProUGUI _nextLevelText;
     
-    private Slider slider;
+    private Slider _slider;
     private const int Rate = 10;
 
     public bool isActive = true;
@@ -33,10 +33,10 @@ public class GameController : MonoBehaviour
         if (!Instance) Instance = this;
         else Destroy(Instance.gameObject);
 
-        scoreText = uiObj.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        slider = uiObj.gameObject.transform.GetChild(1).GetComponent<Slider>();
-        currentLevelText = uiObj.gameObject.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
-        nextLevelText = uiObj.gameObject.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
+        _scoreText = uiObj.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        _slider = uiObj.gameObject.transform.GetChild(1).GetComponent<Slider>();
+        _currentLevelText = uiObj.gameObject.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>();
+        _nextLevelText = uiObj.gameObject.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>();
 
         LoadScoreText();
         LoadLevelText();
@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
     {
         Score += score;
         LoadScoreText();
-        if (slider.value + score > slider.maxValue)
+        if (_slider.value + score > _slider.maxValue)
         {
             NextLevel();
             ResetSlider(Level);
@@ -62,7 +62,7 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            slider.value += score;
+            _slider.value += score;
         }
     }
 
@@ -74,19 +74,19 @@ public class GameController : MonoBehaviour
 
     private void LoadScoreText()
     {
-        scoreText.text = Score.ToString();
+        _scoreText.text = Score.ToString();
     }
 
     private void LoadLevelText()
     {
-        currentLevelText.text = Level.ToString();
-        nextLevelText.text = (Level + 1).ToString();
+        _currentLevelText.text = Level.ToString();
+        _nextLevelText.text = (Level + 1).ToString();
     }
 
     private void ResetSlider(int level)
     {
-        slider.value = 0;
-        slider.maxValue = level * Rate;
+        _slider.value = 0;
+        _slider.maxValue = level * Rate;
     }
 
     private void ShowLevelUpPanel()
@@ -110,4 +110,16 @@ public class GameController : MonoBehaviour
      {
          gameOverPanel.SetActive(false);
      }
+
+    public void ResetGame()
+    {
+        Level = 1;
+        Score = 0;
+        
+        LoadScoreText();
+        LoadLevelText();
+        HideLevelUpPanel();
+        ResetSlider(Level);
+        BallController.Instance.ClearAllBall();
+    }
 }

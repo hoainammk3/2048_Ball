@@ -11,11 +11,20 @@ public class MenuController : MonoBehaviour
     public Slider musicSlider;
     public Slider soundSlider;
 
-    
     private void Start()
     {
-        if (musicSlider) musicSlider.onValueChanged.AddListener(delegate {SliderValueChanged("musicSlider");});
-        if (soundSlider) soundSlider.onValueChanged.AddListener(delegate {SliderValueChanged("soundSlider");});
+        if (musicSlider)
+        {
+            musicSlider.value = AudioManager.Instance.GetVolumeMusic();
+            musicSlider.onValueChanged.AddListener(delegate {SliderValueChanged("musicSlider");});
+        }
+
+        if (soundSlider)
+        {
+            soundSlider.value = AudioManager.Instance.GetVolumeSound();
+            soundSlider.onValueChanged.AddListener(delegate {SliderValueChanged("soundSlider");});
+        }
+        settingPanel.gameObject.SetActive(false);
     }
 
     private void SliderValueChanged(string sliderName)
@@ -39,6 +48,11 @@ public class MenuController : MonoBehaviour
     public void HideSettingPanel()
     {
         settingPanel.SetActive(false);
+    }
+
+    public void HandleShowSettingPanel()
+    {
+        settingPanel.SetActive(!settingPanel.gameObject.activeSelf);
     }
     
     
